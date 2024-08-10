@@ -1,8 +1,21 @@
 import { Outlet, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { Footer, Navbar } from "./components";
+
+import { Navbar } from "./components";
+import {
+  About,
+  AuthPage,
+  Companies,
+  CompanyProfile,
+  FindJobs,
+  JobDetail,
+  UploadJob,
+  UserProfile,
+} from "./pages";
+import { useSelector } from "react-redux";
+
 
 function Layout() {
-  const { user } = true;
+  const { user } = useSelector((state) => state.user);
   const location = useLocation();
 
   return user ? (
@@ -13,11 +26,9 @@ function Layout() {
 }
 
 function App() {
-
-
+  const user  = {};
   return (
-    <>
-      <main className='bg-[#f7fdfd]'>
+    <main className='bg-[#f7fdfd]'>
       <Navbar />
 
       <Routes>
@@ -46,11 +57,8 @@ function App() {
         <Route path='/about-us' element={<About />} />
         <Route path='/user-auth' element={<AuthPage />} />
       </Routes>
-      {user && <Footer />}
     </main>
-    
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
