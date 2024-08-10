@@ -15,7 +15,7 @@ function MenuList({ user, onClick }) {
     <div>
       <Menu as='div' className='inline-block text-left'>
         <div className='flex'>
-          <MenuButton className='inline-flex gap-2 w-full rounded-md bg-[#f7fdfd] md:px-4 py-2 text-sm font-medium text-slate-700 hover:bg-opacity-20 '>
+          <MenuButton className='inline-flex gap-2 w-full rounded-md bg-indigo-50 md:px-4 py-2 text-sm font-medium text-slate-700 hover:bg-opacity-20 '>
             {/* <div className='leading[80px] flex flex-col items-start'>
               <p className='text-sm font-semibold '>
                 {user?.firstName ?? user?.name}
@@ -105,8 +105,8 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='relative bg-[#f7fdfd] z-50'>
-        <nav className='container mx-auto flex items-center justify-between p-5'>
+      <div className='relative bg-indigo-50 z-50'>
+        <nav className='container mx-auto flex items-center justify-between p-3'>
           <div>
             <Link to='/' className='text-indigo-700 font-bold text-xl'>
               Job<span className='text-indigo-500'>Board</span>
