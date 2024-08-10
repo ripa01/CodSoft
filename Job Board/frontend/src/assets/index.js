@@ -7,6 +7,7 @@ import Twitter from "./twitter.png";
 import Instagram from "./instagram.png";
 import Spotify from "./spotify.png";
 import Facebook from "./facebook.png";
+import Office from "./office.png";
 
 
 export {
@@ -19,4 +20,5 @@ export {
   Google,
   Linkedin,
   Youtube,
+  Office,
 };
