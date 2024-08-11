@@ -19,7 +19,7 @@ const JobDetail = () => {
     <div className='container mx-auto'>
       <div className='w-full flex flex-col md:flex-row gap-10'>
         {/* LEFT SIDE */}
-        <div className='w-full h-fit md:w-2/3 2xl:2/4 bg-indigo-100 px-5 py-10 md:px-10 shadow-md'>
+        <div className='w-full h-fit mt-11 rounded-lg md:w-2/3 2xl:2/4 bg-white px-5 py-10 md:px-10 shadow-md'>
           <div className='w-full flex items-center justify-between'>
             <div className='w-3/4 flex gap-2'>
               <img

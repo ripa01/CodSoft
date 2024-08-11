@@ -46,7 +46,7 @@ const Header = ({
             <p className='text-slate-700 font-bold text-4xl'>{title}</p>
           </div>
 
-          <div className='w-full flex items-center justify-center bg-white px-2 md:px-5 py-2.5 ml-11 md:py-6 shadow-2xl rounded-full'>
+          <div className='w-full flex items-center justify-center bg-white px-2 md:px-5 py-2.5 md:py-6 shadow-2xl rounded-full'>
             <SearchInput
               placeholder='Job Title or Keywords'
               icon={<AiOutlineSearch className='text-gray-600 text-xl' />}
