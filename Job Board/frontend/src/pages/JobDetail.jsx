@@ -19,9 +19,9 @@ const JobDetail = () => {
     <div className='container mx-auto'>
       <div className='w-full flex flex-col md:flex-row gap-10'>
         {/* LEFT SIDE */}
-        <div className='w-full h-fit mt-11 rounded-lg md:w-2/3 2xl:2/4 bg-white px-5 py-10 md:px-10 shadow-md'>
+        <div className='w-full h-fit mt-11 rounded-lg md:w-full 2xl:2/4 bg-white px-5 py-10 md:px-10 shadow-md'>
           <div className='w-full flex items-center justify-between'>
-            <div className='w-3/4 flex gap-2'>
+            <div className='w-full flex gap-2'>
               <img
                 src={job?.company?.profileUrl}
                 alt={job?.company?.name}
@@ -47,28 +47,28 @@ const JobDetail = () => {
           </div>
 
           <div className='w-full flex flex-wrap md:flex-row gap-2 items-center justify-between mt-9'>
-            <div className='bg-[#bdf4c8] w-40 h-16 rounded-lg flex flex-col items-center justify-center'>
+            <div className=' w-40 h-16 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>Salary</span>
               <p className='text-lg font-semibold text-indigo-700'>
                 $ {job?.salary}
               </p>
             </div>
 
-            <div className='bg-[#bae5f4] w-40 h-16 rounded-lg flex flex-col items-center justify-center'>
+            <div className='w-40 h-16 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>Job Type</span>
               <p className='text-lg font-semibold text-indigo-700'>
                 {job?.jobType}
               </p>
             </div>
 
-            <div className='bg-[#fed0ab] w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
+            <div className='w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>No. of Applicants</span>
               <p className='text-lg font-semibold text-indigo-700'>
                 {job?.applicants?.length}K
               </p>
             </div>
 
-            <div className='bg-[#cecdff] w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
+            <div className='w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>No. of Vacancies</span>
               <p className='text-lg font-semibold text-indigo-700'>
                 {job?.vacancies}
@@ -76,7 +76,7 @@ const JobDetail = () => {
             </div>
           </div>
 
-          <div className='w-full flex gap-4 py-5'>
+          <div className='w-1/2 flex gap-4 py-5'>
             <CustomButton
               onClick={() => setSelected("0")}
               title='Job Description'
@@ -130,22 +130,11 @@ const JobDetail = () => {
             )}
           </div>
 
-          <div className='w-full'>
+          <div className='w-1/4 '>
             <CustomButton
               title='Apply Now'
               containerStyles={`w-full flex items-center justify-center text-white bg-indigo-900 py-3 px-5 outline-none rounded-full text-base`}
             />
-          </div>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className='w-full md:w-1/3 2xl:w-2/4 p-5 md:mt-0'>
-          <p className='text-indigo-700 text-xl font-semibold'>Similar Job Post</p>
-
-          <div className='w-full flex flex-wrap gap-4'>
-            {jobs?.slice(0, 4).map((job, index) => (
-              <JobCard job={job} key={index} />
-            ))}
           </div>
         </div>
       </div>
