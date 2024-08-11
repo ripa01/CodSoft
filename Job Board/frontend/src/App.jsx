@@ -28,7 +28,7 @@ function Layout() {
 function App() {
   const user  = {};
   return (
-    <main className='bg-[#f7fdfd]'>
+    <main className='bg-indigo-100'>
       <Navbar />
 
       <Routes>
