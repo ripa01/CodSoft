@@ -117,7 +117,11 @@ const Navbar = () => {
             <li>
               <Link to='/'>Find Job</Link>
             </li>
+            <li>
+              <Link to='/companies'>Companies</Link>
+            </li>
         
+            <li>
             <li>
             <Link
             onClick={handleCloseNavbar}
@@ -127,6 +131,7 @@ const Navbar = () => {
           >
             {user?.accountType === "seeker" ? "Applications" : "Post Job"}
           </Link>
+            </li>
             </li>
             <li>
               <Link to='/about-us'>About Us</Link>
@@ -159,12 +164,16 @@ const Navbar = () => {
         {/* MOBILE MENU */}
         <div
           className={`${
-            isOpen ? "absolute flex bg-[#f7fdfd] " : "hidden"
+            isOpen ? "absolute flex bg-indigo-50 " : "hidden"
           } container mx-auto lg:hidden flex-col pl-8 gap-3 py-5`}
         >
           <Link to='/' onClick={handleCloseNavbar}>
             Find Job
           </Link>
+          <Link to='/companies' onClick={handleCloseNavbar}>
+            Companies
+          </Link>
+          
           <Link
             onClick={handleCloseNavbar}
             to={

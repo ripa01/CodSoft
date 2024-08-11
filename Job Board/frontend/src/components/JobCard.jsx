@@ -1,12 +1,13 @@
 
 import moment from "moment";
+import { GoLocation } from "react-icons/go";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
   return (
     <Link to={`/job-detail/${job?.id}`}>
       <div
-        className='w-full md:w-[18rem] 2xl:w-[20rem] h-[16rem] md:h-[18rem] bg-white flex flex-col justify-between shadow-lg 
+        className='w-full md:w-[18rem] 2xl:w-[20rem] h-[16rem] md:h-[18rem] bg-indigo-50 flex flex-col justify-between shadow-lg 
                 rounded-md px-3 py-5 '
       >
         <div className='flex gap-3'>
@@ -15,9 +16,14 @@ const JobCard = ({ job }) => {
             alt={job?.company?.name}
             className='w-14 h-14'
           />
+          
 
           <div className=''>
             <p className='mt-3 text-lg font-semibold truncate'>{job?.jobTitle}</p>
+            <span className='flex gap-2 items-center'>
+              <GoLocation className='text-slate-900 text-sm' />
+              {job?.location}
+            </span>
           </div>
         </div>
 

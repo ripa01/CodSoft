@@ -32,6 +32,7 @@ const JobDetail = () => {
                 <p className='text-xl font-semibold text-black'>
                   {job?.jobTitle}
                 </p>
+                <span className='text-base'>{job?.location}</span>
 
                 <span className='text-base text-indigo-600'>
                   {job?.company?.name}
