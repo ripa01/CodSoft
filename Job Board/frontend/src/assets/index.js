@@ -8,6 +8,7 @@ import Instagram from "./instagram.png";
 import Spotify from "./spotify.png";
 import Facebook from "./facebook.png";
 import Office from "./office.png";
+import JobImg from "./job.jpg";
 
 
 export {
@@ -21,4 +22,5 @@ export {
   Linkedin,
   Youtube,
   Office,
+  JobImg
 };
