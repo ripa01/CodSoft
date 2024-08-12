@@ -105,7 +105,7 @@ const UserForm = ({ open, setOpen }) => {
                           placeholder='Phone Number'
                           type='text'
                           register={register("contact", {
-                            required: "Coontact is required!",
+                            required: "Contact is required!",
                           })}
                           error={errors.contact ? errors.contact?.message : ""}
                         />
