@@ -54,7 +54,7 @@ export const updateURL = ({
     cmpLoc,
     sort,
     navigate,
-    loc, // Renamed to avoid conflict with `location`
+    location, 
     jType,
     exp,
 }) => {
@@ -72,9 +72,6 @@ export const updateURL = ({
     if (sort) {
         params.set("sort", sort);
     }
-    if (loc) {
-        params.set("location", loc);
-    }
     if (jType) {
         params.set("jtype", jType);
     }
@@ -82,7 +79,7 @@ export const updateURL = ({
         params.set("exp", exp);
     }
 
-    const newURL = `${loc.pathname}?${params.toString()}`;
+    const newURL = `${location.pathname}?${params.toString()}`;
     navigate(newURL, { replace: true });
 
     return newURL;
