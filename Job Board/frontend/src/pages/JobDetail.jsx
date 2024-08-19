@@ -6,6 +6,7 @@ import { CustomButton, TextInput } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Dialog, Transition, TransitionChild, DialogPanel,DialogTitle } from "@headlessui/react";
+import { apiRequest } from "../utils";
 
 
 const UserForm = ({ open, setOpen }) => {
@@ -160,23 +161,49 @@ const UserForm = ({ open, setOpen }) => {
 };
 
 const JobDetail = () => {
-  const params = useParams();
-  const id = parseInt(params.id) - 1;
-  const [job, setJob] = useState(jobs[0]);
-  const [selected, setSelected] = useState("0");
+  const { id } = useParams();
+
   const { user } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
-  const userInfo = user;
+
+  const [job, setJob] = useState(null);
+  const [similarJobs,setSimilarJobs] = useState([]);
+  const [selected, setSelected] = useState("0");
+  const [isFetching, setIsFetching] = useState(false);
+
+  const getJobDetails = async() =>
+  {
+    setIsFetching(true);
+
+    try{
+      const res = await apiRequest({
+        url : "/jobs/get-job-detail/" + id,
+        method : "GET",
+      });
+
+      
+      setJob(res?.data);
+      setSimilarJobs(res?.similarJobs);
+      setIsFetching(false);
+      console.log(res);
+
+
+    }catch(error){
+      setIsFetching(false);
+      console.log(error);
+    }
+
+  }
+ 
 
   useEffect(() => {
-    setJob(jobs[id ?? 0]);
+    id && getJobDetails();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [id]);
 
   return (
     <div className='container mx-auto'>
       <div className='w-full flex flex-col md:flex-row gap-10'>
-        {/* LEFT SIDE */}
         <div className='w-full h-fit mt-11 rounded-lg md:w-full 2xl:2/4 bg-indigo-50 px-5 py-10 md:px-10 shadow-md'>
           <div className='w-full flex items-center justify-between'>
             <div className='w-full flex gap-2'>
@@ -222,7 +249,7 @@ const JobDetail = () => {
             <div className='w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>No. of Applicants</span>
               <p className='text-lg font-semibold text-indigo-700'>
-                {job?.applicants?.length}K
+                {job?.applicants?.length}
               </p>
             </div>
 
@@ -263,11 +290,11 @@ const JobDetail = () => {
 
                 <span className='text-base'>{job?.detail[0]?.desc}</span>
 
-                {job?.detail[0]?.requirement && (
+                {job?.detail[0]?.requirements && (
                   <>
                     <p className='text-xl font-semibold text-indigo-600 mt-8'>Requirement</p>
                     <span className='text-base'>
-                      {job?.detail[0]?.requirement}
+                      {job?.detail[0]?.requirements}
                     </span>
                   </>
                 )}
