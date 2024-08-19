@@ -47,18 +47,6 @@ const Companies = () => {
       setIsFetching(false);
       console.log(res);
 
-      // if(res.status === "failed"){
-      //   setErrMsg({ ...res });
-      // }else {
-      //   setErrMsg({ status : "success", message : res.message});
-      //   dispatch(Login(data));
-      //   localStorage.setItem("userInfo",JSON.stringify(data));
-        
-      //   setTimeout(() => {
-      //     window.location.reload();
-      //   },1500);
-      // }
-
     }catch(error){
       console.log(error);
      
@@ -66,7 +54,11 @@ const Companies = () => {
 
   };
 
-  const handleSearchSubmit = () => {};
+  const handleSearchSubmit = async(e) => {
+    e.preventDefault()
+
+    await fetchCompany();
+  };
   const handleShowMore = () => {};
 
   useEffect(()=>{
