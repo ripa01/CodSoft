@@ -260,7 +260,7 @@ const JobDetail = () => {
             <div className=' w-40 h-16 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>Salary</span>
               <p className='text-lg font-semibold text-indigo-700'>
-                $ {job?.salary}
+                 {job?.salary} TK.
               </p>
             </div>
 
@@ -274,7 +274,7 @@ const JobDetail = () => {
             <div className='w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>No. of Applicants</span>
               <p className='text-lg font-semibold text-indigo-700'>
-                {job?.applicants?.length}
+                {job?.applicants?.length || 0}
               </p>
             </div>
 

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiBriefcaseAlt2 } from "react-icons/bi";
 import { BsStars } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { apiRequest,updateURL } from "../utils";
 
 import Header from "../components/Header";
 import { experience, jobTypes, jobs } from "../utils/data";
@@ -16,25 +17,93 @@ const FindJobs = () => {
   const [data, setData] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterJobTypes, setFilterJobTypes] = useState([]);
-  const [filterExp, setFilterExp] = useState([]);
+  // const [filterJobTypes, setFilterJobTypes] = useState([]);
+  // const [filterExp, setFilterExp] = useState([]);
+  // const [expVal,setexpVal] = useState([]);
 
   const [isFetching, setIsFetching] = useState(false);
+  
 
   const navigate = useNavigate();
 
+  const fetchJobs = async() => {
+    setIsFetching(true);
 
-  const filterJobs = (val) => {
-    if (filterJobTypes?.includes(val)) {
-      setFilterJobTypes(filterJobTypes.filter((el) => el != val));
-    } else {
-      setFilterJobTypes([...filterJobTypes, val]);
+
+    const newURL = updateURL({
+      pageNum : page,
+      query : searchQuery,
+      // cmploc : cmpLocation,
+      sort : sort,
+      navigate : navigate,
+      location : location,
+      // jtype : filterJobTypes,
+      // exp : filterExp,
+      
+
+    });
+
+   
+    try{
+      const res = await apiRequest({
+        url : "/jobs" + newURL,
+        method : "GET",
+      });
+
+      setNumPage(res?.numOfPage);
+      setRecordCount(res?.totalJobs);
+      setData(res?.data);
+
+      
+      setIsFetching(false);
+      console.log(res);
+
+    }catch(error){
+      console.log(error);
+     
     }
+
   };
 
-  const filterExperience = async (e) => {
-    setFilterExp(e);
-  };
+  // useEffect(()=>{
+  //   if(expVal.length > 0){
+  //     let newExpVal = [];
+
+  //     expVal?.map((el) => {
+  //       const newEl = el?.split("-");
+  //       newExpVal.push(Number(newEl[0],Number(newEl[1])))
+  //     });
+
+  //     newExpVal?.sort((a,b) => a - b );
+
+  //     setFilterExp(`${newExpVal[0]}-${newExpVal[newExpVal?.length]}`)
+  //   }
+   
+  // },[expVal]);
+
+  useEffect(()=>{
+    fetchJobs();
+  },[sort,page]);
+  
+
+
+  // const filterJobs = (val) => {
+  //   if (filterJobTypes?.includes(val)) {
+  //     setFilterJobTypes(filterJobTypes.filter((el) => el != val));
+  //   } else {
+  //     setFilterJobTypes([...filterJobTypes, val]);
+  //   }
+  // };
+
+  // const filterExperience = async (e) => {
+
+  //   if (expVal?.includes(e)) {
+  //     setexpVal(expVal?.filter((el) => el != e));
+  //   } else {
+  //     setFilterJobTypes([...expVal, e]);
+  //   }
+
+  // };
 
   return (
     <div>
@@ -47,66 +116,13 @@ const FindJobs = () => {
       />
 
       <div className='container mx-auto flex gap-6 2xl:gap-10 md:px-5 py-0 md:py-6 bg-indigo-100'>
-        <div className='hidden md:flex flex-col w-1/6 h-fit bg-indigo-100 shadow-sm'>
-          <p className='text-lg font-semibold text-slate-600'>Filter Search</p>
-
-          <div className='py-2'>
-            <div className='flex justify-between mb-3'>
-              <p className='flex items-center gap-2 font-semibold'>
-                <BiBriefcaseAlt2 />
-                Job Type
-              </p>
-
-              <button>
-                <MdOutlineKeyboardArrowDown />
-              </button>
-            </div>
-
-            <div className='flex flex-col gap-2'>
-              {jobTypes.map((jtype, index) => (
-                <div key={index} className='flex gap-2 text-sm md:text-base '>
-                  <input
-                    type='checkbox'
-                    value={jtype}
-                    className='w-4 h-4'
-                    onChange={(e) => filterJobs(e.target.value)}
-                  />
-                  <span>{jtype}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className='py-2 mt-4'>
-            <div className='flex justify-between mb-3'>
-              <p className='flex items-center gap-2 font-semibold'>
-                <BsStars />
-                Experience
-              </p>
-
-              <button>
-                <MdOutlineKeyboardArrowDown />
-              </button>
-            </div>
-
-            <div className='flex flex-col gap-2'>
-              {experience.map((exp) => (
-                <div key={exp.title} className='flex gap-3'>
-                  <input
-                    type='checkbox'
-                    value={exp?.value}
-                    className='w-4 h-4'
-                    onChange={(e) => filterExperience(e.target.value)}
-                  />
-                  <span>{exp.title}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
 
         <div className='w-full md:w-5/6 px-5 md:px-0'>
           <div className='flex items-center justify-between mb-4'>
+          <p className='text-sm md:text-base'>
+              Shwoing: <span className='font-semibold'>{recordCount}</span> Jobs
+              Available
+            </p>
 
             <div className='flex flex-col md:flex-row gap-0 md:gap-2 md:items-center'>
               <p className='text-sm md:text-base'>Sort By:</p>
@@ -116,9 +132,17 @@ const FindJobs = () => {
           </div>
 
           <div className='w-full flex flex-wrap gap-4'>
-            {jobs.map((job, index) => (
-              <JobCard job={job} key={index} />
-            ))}
+            {data?.map((job, index) => {
+              const newJob = {
+                name: job?.company?.name,
+                logo: job?.company?.profileUrl,
+                ...job,
+              };
+
+              return(
+          
+              <JobCard job={newJob} key={index} />
+            )})}
           </div>
 
           {numPage > page && !isFetching && (
