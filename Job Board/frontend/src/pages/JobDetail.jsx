@@ -171,6 +171,31 @@ const JobDetail = () => {
   const [selected, setSelected] = useState("0");
   const [isFetching, setIsFetching] = useState(false);
 
+  const handleDeletePost = async () => {
+    setIsFetching(true);
+    try {
+      if (window.confirm("Are you sure you want to delete the job post?")) {
+        const res = await apiRequest({
+          url: "/jobs/delete-job/" + job?._id,
+          method: "DELETE",
+          token: user?.token,
+        });
+  
+        if (res?.success) {
+          alert(res?.message);
+          window.location.replace("/");
+        } else {
+          alert("Failed to delete the job post.");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsFetching(false);
+    }
+  };
+  
+
   const getJobDetails = async() =>
   {
     setIsFetching(true);
@@ -193,7 +218,7 @@ const JobDetail = () => {
       console.log(error);
     }
 
-  }
+  };
  
 
   useEffect(() => {
@@ -316,11 +341,18 @@ const JobDetail = () => {
           </div>
 
           <div className='w-1/4 '>
-            <CustomButton
+           {user?._id === job?.company?._id ? (<CustomButton
+              title='Delete Post'
+              onClick={handleDeletePost}
+              containerStyles={`w-full flex items-center justify-center text-white bg-indigo-900 py-3 px-5 outline-none rounded-full text-base`}
+            />) : (
+              <CustomButton
               title='Apply Now'
               onClick={() => setOpen(true)}
               containerStyles={`w-full flex items-center justify-center text-white bg-indigo-900 py-3 px-5 outline-none rounded-full text-base`}
             />
+
+            )}
           </div>
         </div>
       </div>
