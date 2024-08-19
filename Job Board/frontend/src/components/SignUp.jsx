@@ -52,7 +52,7 @@ const SignUp = ({ open, setOpen }) => {
         method : "POST",
       });
 
-      console.log(res);
+      // console.log(res);
 
       if(res?.status === "failed"){
         setErrMsg(res?.message);
