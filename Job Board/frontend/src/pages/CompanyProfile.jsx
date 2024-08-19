@@ -183,11 +183,16 @@ const CompnayForm = ({ open, setOpen }) => {
                     </div>
 
                     <div className='mt-4'>
+                      { isLoading ? (
+                        <Loading />
+                      ):(
+                      
                       <CustomButton
                         type='submit'
                         containerStyles='inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-8 py-2 text-sm font-medium text-white hover:bg-[#1d4fd846] hover:text-[#1d4fd8] focus:outline-none '
                         title={"Submit"}
                       />
+  )}
                     </div>
                   </form>
                 </DialogPanel>
@@ -294,13 +299,14 @@ const CompanyProfile = () => {
       </div>
 
       <div className='w-full mt-20 flex flex-col gap-2'>
-        <p>Jobs Posted</p>
+        {/* <p>Jobs Posted</p> */}
 
         <div className='flex flex-wrap gap-3'>
-          {jobs?.map((job, index) => {
+          {info?.jobPosts?.map((job, index) => {
             const data = {
               name: info?.name,
               email: info?.email,
+              logo : info?.profileUrl,
               ...job,
             };
             return <JobCard job={data} key={index} />;

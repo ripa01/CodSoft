@@ -21,11 +21,20 @@ function MenuList({ user, onClick }) {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex items-center gap-2 rounded-md bg-indigo-50 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-opacity-20">
-          <img
-            src={user?.profileUrl || '/default-profile.png'} // Fallback image
-            alt="user profile"
-            className="w-10 h-10 rounded-full object-cover"
-          />
+        <div className='leading[80px] flex flex-col items-start'>
+              <p className='text-sm font-semibold '>
+                {user?.firstName ?? user?.name}
+              </p>
+              <span className='text-sm text-blue-600 '>
+                {user?.jobTitle ?? user?.email}
+              </span>
+            </div>
+
+        {/* <img
+              src={ user?.profileUrl }
+              alt='user profile'
+              className='w-10 h-10 rounded-full object-cover '
+            /> */}
           <BiChevronDown className="h-8 w-8 text-slate-600" aria-hidden="true" />
         </MenuButton>
       </div>
@@ -89,7 +98,7 @@ function MenuList({ user, onClick }) {
 const Navbar = () => {
   const  { user }  = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
-  console.log("Current User:", user);
+  // console.log("Current User:", user);
 
   const handleCloseNavbar = () => {
     setIsOpen((prev) => !prev);
