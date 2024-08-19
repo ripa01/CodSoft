@@ -39,9 +39,9 @@ const SignUp = ({ open, setOpen }) => {
          URL = 'companies/register';
     }else{
       if(accountType === 'seeker'){
-        URL = 'auth/register';
+        URL = 'auth/login';
       }else 
-         URL = 'companies/register';
+         URL = 'companies/login';
 
     }
 
@@ -51,6 +51,8 @@ const SignUp = ({ open, setOpen }) => {
         data : data,
         method : "POST",
       });
+
+      console.log(res);
 
       if(res?.status === "failed"){
         setErrMsg(res?.message);
