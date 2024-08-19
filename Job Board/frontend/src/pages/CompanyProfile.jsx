@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition ,DialogTitle,TransitionChild,DialogPanel} from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { HiLocationMarker } from "react-icons/hi";
@@ -8,6 +8,9 @@ import { FiPhoneCall, FiEdit3, FiUpload } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import { companies, jobs } from "../utils/data";
 import { CustomButton, JobCard, Loading, TextInput } from "../components";
+import { handleFileUpload } from "../utils";
+import { apiRequest } from "../utils";
+import { Login } from "../redux/userSlice";
 
 const CompnayForm = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.user);
@@ -19,22 +22,63 @@ const CompnayForm = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: { ...user?.user },
+    defaultValues: { ...user },
   });
 
   const dispatch = useDispatch();
   const [profileImage, setProfileImage] = useState("");
   const [uploadCv, setUploadCv] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState(false);
 
-  const onSubmit = () => {};
+  const onSubmit = async(data) => {
+    setIsLoading(true);
+    setErrMsg(null);
+
+    const uri = profileImage && (await handleFileUpload(profileImage));
+
+    const newData = uri ? { ...data,profileUrl : uri } : data;
+
+    try{
+      const res = await apiRequest({
+        url : "/companies/update-company",
+        token: user?.token,
+        data : newData,
+        method : "PUT",
+      });
+
+      
+      setIsLoading(false);
+      console.log(res);
+
+      if(res.status === "failed"){
+        setErrMsg({ ...res });
+      }else {
+        setErrMsg({ status : "success", message : res.message});
+        dispatch(Login(data));
+        localStorage.setItem("userInfo",JSON.stringify(data));
+        
+        setTimeout(() => {
+          window.location.reload();
+        },1500);
+      }
+
+    }catch(error){
+      console.log(error);
+      setErrMsg("An error occurred. Please try again.");
+      setIsLoading(false);
+
+    }
+
+  };
 
   const closeModal = () => setOpen(false);
 
   return (
     <>
-      <Transition appear show={opener ?? false} as={Fragment}>
+      <Transition appear show={open ?? false} as={Fragment}>
         <Dialog as='div' className='relative z-50' onClose={closeModal}>
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter='ease-out duration-300'
             enterFrom='opacity-0'
@@ -44,11 +88,11 @@ const CompnayForm = ({ open, setOpen }) => {
             leaveTo='opacity-0'
           >
             <div className='fixed inset-0 bg-black bg-opacity-25' />
-          </Transition.Child>
+          </TransitionChild>
 
           <div className='fixed inset-0 overflow-y-auto'>
             <div className='flex min-h-full items-center justify-center p-4 text-center'>
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter='ease-out duration-300'
                 enterFrom='opacity-0 scale-95'
@@ -57,13 +101,13 @@ const CompnayForm = ({ open, setOpen }) => {
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                  <Dialog.Title
+                <DialogPanel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+                  <DialogTitle
                     as='h3'
                     className='text-lg font-semibold leading-6 text-gray-900'
                   >
                     Edit Company Profile
-                  </Dialog.Title>
+                  </DialogTitle>
 
                   <form
                     className='w-full mt-2 flex flex-col gap-5'
@@ -146,8 +190,8 @@ const CompnayForm = ({ open, setOpen }) => {
                       />
                     </div>
                   </form>
-                </Dialog.Panel>
-              </Transition.Child>
+                </DialogPanel>
+              </TransitionChild>
             </div>
           </div>
         </Dialog>
@@ -163,8 +207,39 @@ const CompanyProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
 
+  const fetchCompany = async() => {
+    setIsLoading(true);
+    let id = null;
+
+    if(params.id && params.id != undefined){
+      id = params?.id;
+    }else{
+      id = user?._id;
+
+    }
+
+
+    
+    try{
+      const res = await apiRequest({
+        url : "/companies/get-company/" + id,
+        method : "GET",
+      });
+
+      setInfo(res?.data);
+      setIsLoading(false);
+
+    }catch(error){
+      console.log(error);
+
+      setIsLoading(false);
+
+    }
+
+  };
+
   useEffect(() => {
-    setInfo(companies[parseInt(params?.id) - 1 || 0]);
+    fetchCompany();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
@@ -181,7 +256,7 @@ const CompanyProfile = () => {
           </h2>
 
           {user?.user?.accountType === undefined &&
-            info?._id === user?.user?._id && (
+            info?._id === user?._id && (
               <div className='flex items-center justifu-center py-5 md:py-0 gap-4'>
                 <CustomButton
                   onClick={() => setOpenForm(true)}
