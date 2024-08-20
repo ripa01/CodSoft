@@ -121,12 +121,13 @@ const Navbar = () => {
             <Link to="/companies">Companies</Link>
           </li>
           <li>
-            <Link
-              onClick={handleCloseNavbar}
-              to={user?.accountType === "seeker" ? "apply-history" : "upload-job"}
-            >
-              {user?.accountType === "seeker" ? "Applications" : "Post Job"}
-            </Link>
+          {user?.token && (
+            <li>
+              <Link to={user.accountType === "seeker" ? "apply-history" : "upload-job"}>
+                {user.accountType === "seeker" ? "Applications" : "Post Job"}
+              </Link>
+            </li>
+          )}
           </li>
           <li>
             <Link to="/about-us">About Us</Link>
@@ -166,12 +167,15 @@ const Navbar = () => {
         <Link to="/companies" onClick={handleCloseNavbar}>
           Companies
         </Link>
-        <Link
-          onClick={handleCloseNavbar}
-          to={user?.accountType === "seeker" ? "apply-history" : "upload-job"}
-        >
-          {user?.accountType === "seeker" ? "Applications" : "Post Job"}
-        </Link>
+
+        {user?.token && (
+          
+              <Link to={user.accountType === "seeker" ? "apply-history" : "upload-job"}>
+                {user.accountType === "seeker" ? "Applications" : "Post Job"}
+              </Link>
+            
+          )}
+          
         <Link to="/about-us" onClick={handleCloseNavbar}>
           About Us
         </Link>
