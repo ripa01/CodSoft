@@ -104,20 +104,25 @@ const FindJobs = () => {
   //   }
 
   // };
+  const handleSearchSubmit = async(e) => {
+    e.preventDefault()
+
+    await fetchJobs();
+  };
 
   return (
     <div>
       <Header
         title='Land Your Dream Job with JobBoard: Your Path to Success Starts Here!'
         type='home'
-        handleClick={() => {}}
+        handleClick={handleSearchSubmit}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
 
       <div className='container mx-auto flex gap-6 2xl:gap-10 md:px-5 py-0 md:py-6 bg-indigo-100'>
 
-        <div className='w-full md:w-5/6 px-5 md:px-0'>
+        <div className=''>
           <div className='flex items-center justify-between mb-4'>
           <p className='text-sm md:text-base'>
               Shwoing: <span className='font-semibold'>{recordCount}</span> Jobs
@@ -131,7 +136,8 @@ const FindJobs = () => {
             </div>
           </div>
 
-          <div className='w-full flex flex-wrap gap-4'>
+          <div className="w-full flex flex-wrap gap-4">
+
             {data?.map((job, index) => {
               const newJob = {
                 name: job?.company?.name,

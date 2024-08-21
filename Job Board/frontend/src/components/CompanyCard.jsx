@@ -23,9 +23,9 @@ const CompanyCard = ({ cmp }) => {
         </div>
       </div>
 
-      <div className='hidden w-1/4 h-full md:flex items-center'>
+      {/* <div className='hidden w-1/4 h-full md:flex items-center'>
         <p className='text-base text-start'>{cmp?.location}</p>
-      </div>
+      </div> */}
 
       <div className='w-1/4 h-full flex flex-col items-center'>
         <p className='text-blue-600 font-semibold'>{cmp?.jobPosts?.length}</p>
