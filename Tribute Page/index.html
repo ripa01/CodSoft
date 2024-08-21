@@ -6,8 +6,37 @@
     <title>Tribute Page</title>
     <link href="./dist/output.css" rel="stylesheet" />
 </head>
-<body>
-    <h1 class="text-3xl bg-white">Hello</h1>
-    
+<body class="bg-black overflow-x-hidden">
+
+<header
+    class="top-0 right-0 left-0 h-64 md:h-72 bg-cover bg-center transition-all duration-300"
+    style="background-image: url('src/img/Logo.svg');"
+>
+    <nav
+        class="max-w-7xl mx-auto bg-gray-800 bg-opacity-60 md:bg-transparent p-5 h-full flex items-center justify-center"
+    >
+        <div class="text-center">
+            <a href="/" class="text-white font-bold text-4xl md:text-6xl">
+                Edgar Degas
+            </a>
+            <p class="text-white hover:text-gray-300 text-lg md:text-xl mt-2">19 July 1834 – 27 September 1917</p>
+        </div>
+    </nav>
+</header>
+
+<section class="bg-black max-w-7xl mx-auto px-5 my-32">
+    <div class="flex md:flex-row flex-col justify-between items-center text-white gap-8 py-10">
+        <div class="md:w-1/2">
+            <img src="src/img/profile.webp" alt="Edgar Degas" class="w-full md:w-3/4 mx-auto md:ml-auto" />
+        </div>
+        <div class="md:w-1/2 text-center md:text-left">
+            <p class="text-xl font-montserrat mb-5">
+                Edgar Degas (1834–1917) was a renowned French Impressionist artist, celebrated for his mastery in depicting movement, particularly through his pastel drawings and oil paintings of dancers. Although closely associated with Impressionism, Degas preferred to be called a realist and focused on indoor scenes, unlike his peers who often painted en plein air. His work extends beyond dance, including bronze sculptures, prints, and striking portraits known for their psychological depth. Initially trained as a history painter, Degas later applied his classical techniques to modern subjects, creating a unique blend of tradition and innovation in his art.
+            </p>
+        </div>
+     
+    </div>
+</section>
+
 </body>
 </html>
