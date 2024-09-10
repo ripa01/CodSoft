@@ -1,4 +1,14 @@
 
+# 🚀 Level 2 Task 1: Tribute Page: Edgar Degas 🚀
+
+## Project Overview
+
+This project is a **Tribute Page** dedicated to the renowned French artist **Edgar Degas**, widely known for his masterpieces in painting, sculpture, and drawing, particularly of dancers.This project showcases a visually appealing layout, written content about Edgar Degas' life and works, and an artistic tribute that reflects his influence.
+
+## 🚀 **Live Demo**
+[Tribute Page](https://codsoft-tributepage.netlify.app/)
+
+
 # 🚀 Level 2 Task 2: Job Finder Application (MERN Stack) 🚀
 
 ## **Project Overview**
@@ -24,6 +34,6 @@ This is a full-stack **MERN (MongoDB, Express.js, React.js, Node.js)** Job Finde
   - **Headless UI** for interactive components
 
 ## 🚀 **Live Demo**
-[View Demo on Netlify](https://jobboard-ripa.netlify.app/find-jobs?sort=Newest)
+[JobBoard](https://jobboard-ripa.netlify.app/find-jobs?sort=Newest)
 
 
